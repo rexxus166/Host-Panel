@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Service;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use App\Jobs\ActivateCpanelAccount;
 use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
@@ -130,59 +131,24 @@ class AdminController extends Controller
      */
     public function updateStatus(Request $request, Service $service)
     {
-        $request->validate([
-            'status' => ['required', 'in:active,suspended,terminated'],
-        ]);
-
         $newStatus = $request->status;
 
-        // JALANKAN LOGIKA API HANYA JIKA STATUS BARU ADALAH 'ACTIVE' DARI 'PENDING'
         if ($newStatus == 'active' && $service->status == 'pending') {
-            
-            // Ambil kredensial dari file config
-            $host = config('services.whm.host');
-            $user = config('services.whm.user');
-            $token = config('services.whm.token');
 
-            // Siapkan parameter untuk API
-            $username = strtolower(substr(preg_replace('/[^a-zA-Z0-9]/', '', $service->domain), 0, 8));
-            $password = Str::random(12) . 'A1!'; // Contoh password kuat
+            // Kirim pekerjaan ke antrian. Proses ini sangat cepat!
+            ActivateCpanelAccount::dispatch($service);
 
-            // Kirim request ke WHM API
-            $response = Http::withoutVerifying()
-                         ->timeout(300) // Timeout 5 menit (300 detik)
-                         ->withHeaders([
-                            'Authorization' => 'whm ' . $user . ':' . $token,
-                         ])->get("https://{$host}:2087/json-api/createacct", [
-                            'api.version'   => 1,
-                            'username'      => $username,
-                            'domain'        => $service->domain,
-                            'password'      => $password,
-                            'plan'          => $service->product->package_name_whm, // Menggunakan nama paket WHM
-                            'contactemail'  => $service->user->email,
-                         ]);
+            // Langsung beri respon ke admin
+            return redirect()->route('admin.services.show', $service)
+                            ->with('success', 'Perintah aktivasi untuk ' . $service->domain . ' telah dikirim ke antrian!');
 
-            // TAMBAHKAN BARIS INI UNTUK DEBUG
-            // dd($response->json());
-            
-            // Periksa respon dari API
-            if (!$response->successful() || $response->json()['metadata']['result'] != 1) {
-                // Jika gagal, kembali dengan pesan error dari WHM
-                $reason = $response->json()['metadata']['reason'] ?? 'Terjadi kesalahan tidak diketahui.';
-                return redirect()->back()->with('error', 'Gagal membuat akun cPanel: ' . $reason);
-            }
+        } else {
+            // Untuk status lain (suspend, dll) kita update langsung
+            $service->update(['status' => $newStatus]);
 
-            // Jika berhasil, kirim email ke user (opsional tapi sangat direkomendasikan)
-            Mail::to($service->user->email)->send(new NewServiceWelcomeEmail($service, $username, $password));
+            return redirect()->route('admin.services.show', $service)
+                            ->with('success', 'Status layanan berhasil diubah menjadi ' . ucfirst($newStatus) . '.');
         }
-
-        // Update status di database kita
-        $service->update([
-            'status' => $newStatus,
-        ]);
-
-        return redirect()->route('admin.service', $service)
-                        ->with('success', 'Status layanan berhasil diubah menjadi ' . $newStatus . '.');
     }
     
     /**
