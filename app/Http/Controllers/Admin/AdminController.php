@@ -139,14 +139,14 @@ class AdminController extends Controller
             ActivateCpanelAccount::dispatch($service);
 
             // Langsung beri respon ke admin
-            return redirect()->route('admin.services.show', $service)
+            return redirect()->route('admin.service.show', $service)
                             ->with('success', 'Perintah aktivasi untuk ' . $service->domain . ' telah dikirim ke antrian!');
 
         } else {
             // Untuk status lain (suspend, dll) kita update langsung
             $service->update(['status' => $newStatus]);
 
-            return redirect()->route('admin.services.show', $service)
+            return redirect()->route('admin.service.show', $service)
                             ->with('success', 'Status layanan berhasil diubah menjadi ' . ucfirst($newStatus) . '.');
         }
     }
