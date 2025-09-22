@@ -1,15 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\DashboardRedirectController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Reseller\ResellerController;
 use App\Http\Controllers\User\UserController;
 
 // Halaman depan yang bisa diakses semua orang
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Grup untuk semua rute yang hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
@@ -29,6 +29,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/produk/update/{product}', [AdminController::class, 'updateProduk'])->middleware('role:admin')->name('admin.produk.update');
     Route::delete('/admin/produk/destroy/{product}', [AdminController::class, 'destroyProduk'])->middleware('role:admin')->name('admin.produk.destroy');
 
+    // Kelola Service / Layanan
+    Route::get('/admin/services', [AdminController::class, 'service'])->middleware('role:admin')->name('admin.service');
+    Route::get('/admin/services/{service}', [AdminController::class, 'showService'])->middleware('role:admin')->name('admin.service.show');
+    Route::patch('/admin/services/{service}/status', [AdminController::class, 'updateStatus'])->middleware('role:admin')->name('admin.services.updateStatus');
+
     // Kelola User
     Route::get('/admin/user', [AdminController::class, 'pengguna'])->middleware('role:admin')->name('admin.user');
     Route::get('/admin/user/create', [AdminController::class, 'createPengguna'])->middleware('role:admin')->name('admin.user.create');
@@ -41,7 +46,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reseller/dashboard', [ResellerController::class, 'index'])->middleware('role:reseller')->name('reseller.dashboard');
 
     // Route untuk Users
+    // Dashboard Users
     Route::get('/dashboard', [UserController::class, 'index'])->middleware('role:user')->name('user.dashboard');
+
+    // Layanan Users
+    Route::get('/services', [UserController::class, 'service'])->name('user.service');
+    Route::get('/service/{service}', [UserController::class, 'show'])->name('user.service.show');
+
+    // Produk Users
+    Route::get('/produk', [UserController::class, 'produk'])->name('produk.index');
+    
+    // Rute untuk proses pemesanan
+    Route::get('/order/create/{product}', [OrderController::class, 'create'])->name('order.create');
+    Route::post('/order/store/{product}', [OrderController::class, 'store'])->name('order.store');
 });
 
 

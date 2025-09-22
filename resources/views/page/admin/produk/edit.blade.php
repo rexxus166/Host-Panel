@@ -29,6 +29,14 @@
                     @enderror
                 </div>
 
+                {{-- Nama Package di WHM --}}
+                <div class="mb-4">
+                    <label for="package_name_whm" class="block text-dark font-semibold mb-2">Nama Package di WHM</label>
+                    <input type="text" id="package_name_whm" name="package_name_whm" value="{{ old('package_name_whm', $product->package_name_whm) }}"
+                        class="w-full px-4 py-2 border-2 border-dark rounded-playful-sm-inner" 
+                        required>
+                </div>
+
                 {{-- Harga --}}
                 <div class="mb-4">
                     <label for="price" class="block text-dark font-semibold mb-2">Harga (Rp)</label>

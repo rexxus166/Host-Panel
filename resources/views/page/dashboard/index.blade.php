@@ -17,7 +17,7 @@
             <div class="text-center py-10 border-2 border-dashed border-gray-300 rounded-playful-md">
                 <i class="fas fa-server fa-3x text-gray-400 mb-4"></i>
                 <p class="text-gray-500">Anda belum memiliki layanan hosting yang aktif.</p>
-                <a href="#" {{-- Nanti arahkan ke halaman order --}}
+                <a href="{{ route('produk.index') }}" {{-- Nanti arahkan ke halaman order --}}
                    class="mt-4 inline-block px-5 py-2 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200">
                     Pesan Layanan Sekarang
                 </a>

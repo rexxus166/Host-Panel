@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Service;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -45,6 +49,7 @@ class AdminController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'package_name_whm' => 'required|string|max:255', // <-- Tambahkan ini
             'price' => 'required|integer|min:0',
             'disk_space_gb' => 'required|integer|min:1',
             'bandwidth_gb' => 'required|integer|min:1',
@@ -71,6 +76,7 @@ class AdminController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'package_name_whm' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
             'disk_space_gb' => 'required|integer|min:1',
             'bandwidth_gb' => 'required|integer|min:1',
@@ -91,6 +97,92 @@ class AdminController extends Controller
 
         return redirect()->route('admin.produk')
                         ->with('success', 'Produk berhasil dihapus!');
+    }
+
+    /**
+     * Manajemen Layanan
+     */
+    public function service()
+    {
+        // Ambil semua layanan, beserta data user dan produk terkait
+        // Urutkan agar status 'pending' muncul di atas
+        $services = Service::with(['user', 'product'])
+                            ->orderByRaw("FIELD(status, 'pending', 'active', 'suspended', 'terminated')")
+                            ->latest()
+                            ->paginate(15);
+
+        return view('page.admin.service.index', compact('services'));
+    }
+
+    /**
+     * Detail Layanan
+     */
+    public function showService(Service $service)
+    {
+        // Kita bisa memuat relasi user dan produk untuk ditampilkan di view
+        $service->load(['user', 'product']);
+
+        return view('page.admin.service.show', compact('service'));
+    }
+
+    /**
+     * Update Status Layanan
+     */
+    public function updateStatus(Request $request, Service $service)
+    {
+        $request->validate([
+            'status' => ['required', 'in:active,suspended,terminated'],
+        ]);
+
+        $newStatus = $request->status;
+
+        // JALANKAN LOGIKA API HANYA JIKA STATUS BARU ADALAH 'ACTIVE' DARI 'PENDING'
+        if ($newStatus == 'active' && $service->status == 'pending') {
+            
+            // Ambil kredensial dari file config
+            $host = config('services.whm.host');
+            $user = config('services.whm.user');
+            $token = config('services.whm.token');
+
+            // Siapkan parameter untuk API
+            $username = strtolower(substr(preg_replace('/[^a-zA-Z0-9]/', '', $service->domain), 0, 8));
+            $password = Str::random(12) . 'A1!'; // Contoh password kuat
+
+            // Kirim request ke WHM API
+            $response = Http::withoutVerifying()
+                         ->timeout(300) // Timeout 5 menit (300 detik)
+                         ->withHeaders([
+                            'Authorization' => 'whm ' . $user . ':' . $token,
+                         ])->get("https://{$host}:2087/json-api/createacct", [
+                            'api.version'   => 1,
+                            'username'      => $username,
+                            'domain'        => $service->domain,
+                            'password'      => $password,
+                            'plan'          => $service->product->package_name_whm, // Menggunakan nama paket WHM
+                            'contactemail'  => $service->user->email,
+                         ]);
+
+            // TAMBAHKAN BARIS INI UNTUK DEBUG
+            // dd($response->json());
+            
+            // Periksa respon dari API
+            if (!$response->successful() || $response->json()['metadata']['result'] != 1) {
+                // Jika gagal, kembali dengan pesan error dari WHM
+                $reason = $response->json()['metadata']['reason'] ?? 'Terjadi kesalahan tidak diketahui.';
+                return redirect()->back()->with('error', 'Gagal membuat akun cPanel: ' . $reason);
+            }
+
+            // Jika berhasil, kirim email ke user (opsional tapi sangat direkomendasikan)
+            // Mail::to($service->user->email)->send(new AccountDetailsEmail($username, $password));
+        }
+
+        // Update status di database kita
+        $service->update([
+            'status' => $newStatus,
+        ]);
+
+        return redirect()->route('admin.service', $service)
+                        ->with('success', 'Status layanan berhasil diubah menjadi ' . $newStatus . '.');
     }
     
     /**

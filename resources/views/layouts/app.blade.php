@@ -44,8 +44,9 @@
                 <span class="ml-4 font-semibold font-lexend">Dashboard</span>
             </a>
             
-            <a href="#" {{-- Nanti kita buat route('user.services') --}}
-               class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary">
+            <a href="{{ route('user.service') }}"
+               class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary 
+                      {{ request()->routeIs('user.service') ? 'bg-secondary' : '' }}">
                 <i class="fas fa-server w-6 text-center"></i>
                 <span class="ml-4 font-semibold font-lexend">Layanan Saya</span>
             </a>

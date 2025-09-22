@@ -17,6 +17,7 @@ class Product extends Model
     // TAMBAHKAN INI
     protected $fillable = [
         'name',
+        'package_name_whm',
         'price',
         'disk_space_gb',
         'bandwidth_gb',

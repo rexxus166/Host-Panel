@@ -83,6 +83,14 @@
                 <span class="ml-4 font-semibold font-lexend">Pengguna</span>
             </a>
 
+            {{-- Manajemen Layanan Link --}}
+            <a href="{{ route('admin.service') }}" 
+            class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary 
+                    {{ request()->routeIs('admin.service', 'admin.service.*') ? 'bg-secondary' : '' }}">
+                <i class="fas fa-server w-6 text-center"></i>
+                <span class="ml-4 font-semibold font-lexend">Layanan</span>
+            </a>
+
             <div>
                 <button type="button" id="admin-menu-button" 
                         class="flex items-center justify-between w-full mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary 

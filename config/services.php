@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'whm' => [
+        'host' => env('WHM_HOST'),
+        'user' => env('WHM_USER'),
+        'token' => env('WHM_TOKEN'),
+    ],
+
 ];
