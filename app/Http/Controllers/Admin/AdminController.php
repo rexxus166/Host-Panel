@@ -173,7 +173,7 @@ class AdminController extends Controller
             }
 
             // Jika berhasil, kirim email ke user (opsional tapi sangat direkomendasikan)
-            // Mail::to($service->user->email)->send(new AccountDetailsEmail($username, $password));
+            Mail::to($service->user->email)->send(new NewServiceWelcomeEmail($service, $username, $password));
         }
 
         // Update status di database kita

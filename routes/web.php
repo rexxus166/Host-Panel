@@ -3,10 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\DashboardRedirectController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Reseller\ResellerController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\DashboardRedirectController;
+use App\Http\Controllers\Reseller\ResellerController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewServiceWelcomeEmail;
+use App\Models\Service;
 
 // Halaman depan yang bisa diakses semua orang
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -60,6 +63,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order/create/{product}', [OrderController::class, 'create'])->name('order.create');
     Route::post('/order/store/{product}', [OrderController::class, 'store'])->name('order.store');
 });
-
 
 require __DIR__.'/auth.php';
