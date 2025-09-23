@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Service;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,12 +14,20 @@ class NewServiceWelcomeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    // Deklarasikan properti publik di sini
+    public Service $service;
+    public string $cpanelUsername;
+    public string $cpanelPassword;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(Service $service, string $cpanelUsername, string $cpanelPassword)
     {
-        //
+        // Set nilainya di dalam constructor
+        $this->service = $service;
+        $this->cpanelUsername = $cpanelUsername;
+        $this->cpanelPassword = $cpanelPassword;
     }
 
     /**
@@ -27,7 +36,7 @@ class NewServiceWelcomeEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Service Welcome Email',
+            subject: 'Layanan Hosting Anda Telah Diaktifkan!',
         );
     }
 
