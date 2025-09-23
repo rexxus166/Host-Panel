@@ -48,7 +48,7 @@
                 {{-- Logo untuk Mobile, jika branding section tidak full-width --}}
                 <div class="text-center mb-6 lg:hidden">
                     <a href="/">
-                        <img src="{{ asset('assets/icon/logo.svg') }}" class="w-16 h-16 mx-auto" alt="HostPanel Logo">
+                        <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-16 h-16 mx-auto" alt="HostPanel Logo">
                     </a>
                 </div>
                 

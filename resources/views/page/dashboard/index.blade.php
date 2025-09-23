@@ -75,10 +75,16 @@
     <div class="mt-8 bg-white p-6 rounded-playful-md shadow-border-offset border-2 border-dark">
          <h3 class="text-h4 font-exo2 text-dark mb-4">Aksi Cepat</h3>
          <div class="flex flex-wrap gap-4">
-              <a href="#" 
+              <a href="{{ route('produk.index') }}" 
+                  class="px-5 py-2 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200">
+                  <i class="fas fa-file-invoice-dollar mr-2"></i> Produk
+              </a>
+
+              <a href="{{ route('tagihan') }}" 
                   class="px-5 py-2 bg-secondary text-white font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200">
                   <i class="fas fa-file-invoice-dollar mr-2"></i> Lihat Tagihan
               </a>
+
               <a href="#" 
                   class="px-5 py-2 bg-gray-200 text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-gray-300 transition-all duration-200">
                   <i class="fas fa-user-edit mr-2"></i> Edit Profil

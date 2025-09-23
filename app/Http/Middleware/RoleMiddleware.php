@@ -12,13 +12,31 @@ class RoleMiddleware
     /**
      * Handle an incoming request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  string  $role
      */
     public function handle(Request $request, Closure $next, string $role): Response
-    { // <-- PASTIKAN 'string $role' ADA DI SINI
+    {
+        if (!Auth::check()) {
+            // Jika belum login, arahkan ke halaman login
+            return redirect()->route('login');
+        }
 
-        if (!Auth::check() || Auth::user()->role !== $role) {
-            abort(403, 'ANDA TIDAK MEMILIKI AKSES.');
+        $user = Auth::user();
+
+        if ($user->role !== $role) {
+            // Redirect ke dashboard yang sesuai dengan rolenya
+            switch ($user->role) {
+                case 'admin':
+                    return redirect('/admin/dashboard');
+                case 'reseller':
+                    return redirect('/reseller/dashboard');
+                case 'user':
+                    return redirect('/dashboard');
+                default:
+                    return redirect('/'); // default fallback jika role tidak dikenali
+            }
         }
 
         return $next($request);
