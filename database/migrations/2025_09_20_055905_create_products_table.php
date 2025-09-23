@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description')->nullable();
             $table->string('package_name_whm');
             $table->integer('price');
-            $table->integer('disk_space_gb');
-            $table->integer('bandwidth_gb');
+            $table->string('disk_space_gb');
+            $table->string('bandwidth_gb');
+            $table->string('type');
+            $table->boolean('has_free_domain')->default(false);
+            $table->string('free_domain_tld')->nullable();
             $table->timestamps();
         });
     }

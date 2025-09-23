@@ -41,8 +41,20 @@
                     <a href="{{ route('login') }}" class="px-5 py-2 text-dark font-bold rounded-playful-sm hover:bg-gray-200 transition-all">Login</a>
                     <a href="{{ route('register') }}" class="px-5 py-2 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all">Register</a>
                 @endguest
+
                 @auth
-                    <a href="{{ route('user.dashboard') }}" class="px-5 py-2 bg-secondary text-white font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all">Dashboard</a>
+                    @php
+                        $user = Auth::user();
+                        $dashboardRoute = match($user->role) {
+                            'admin' => route('admin.dashboard'),
+                            'reseller' => route('reseller.dashboard'),
+                            'user' => route('user.dashboard'),
+                            default => route('user.dashboard'),
+                        };
+                    @endphp
+                    <a href="{{ $dashboardRoute }}" class="px-5 py-2 bg-secondary text-white font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all">
+                        Dashboard
+                    </a>
                 @endauth
             </div>
 
@@ -63,8 +75,18 @@
                     <a href="{{ route('login') }}" class="block text-center w-full mb-2 px-5 py-2 text-dark font-bold rounded-playful-sm bg-gray-200">Login</a>
                     <a href="{{ route('register') }}" class="block text-center w-full px-5 py-2 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset">Register</a>
                 @endguest
+
                 @auth
-                    <a href="{{ route('user.dashboard') }}" class="block text-center w-full px-5 py-2 bg-secondary text-white font-bold rounded-playful-sm border-2 border-dark shadow-border-offset">Dashboard</a>
+                    @php
+                        $user = Auth::user();
+                        $dashboardRoute = match($user->role) {
+                            'admin' => route('admin.dashboard'),
+                            'reseller' => route('reseller.dashboard'),
+                            'user' => route('user.dashboard'),
+                            default => route('user.dashboard'),
+                        };
+                    @endphp
+                    <a href="{{ $dashboardRoute }}" class="block text-center w-full px-5 py-2 bg-secondary text-white font-bold rounded-playful-sm border-2 border-dark shadow-border-offset">Dashboard</a>
                 @endauth
             </div>
         </div>
@@ -93,17 +115,7 @@
                     </p>
                 </div>
 
-                {{-- Kolom 2: Navigasi Cepat --}}
-                <!-- <div>
-                    <h4 class="text-lg font-bold font-exo2 mb-4">Navigasi</h4>
-                    <div class="flex flex-col space-y-3">
-                        <a href="#features" class="text-gray-400 hover:text-white transition-colors">Fitur</a>
-                        <a href="#pricing" class="text-gray-400 hover:text-white transition-colors">Harga</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Kontak</a>
-                    </div>
-                </div> -->
-
-                {{-- Kolom 3: Legal & Sosial Media --}}
+                {{-- Kolom 2: Legal & Sosial Media --}}
                 <div>
                     <h4 class="text-lg font-bold font-exo2 mb-4">Legal</h4>
                     <div class="flex flex-col space-y-3">
@@ -119,7 +131,7 @@
                 </div>
             </div>
 
-            {{-- Garis Pemisah & Copyright --}}
+            {{-- Copyright --}}
             <div class="mt-12 border-t border-gray-700 pt-6 text-center">
                 <p class="text-gray-500 text-sm">
                     &copy; {{ date('Y') }} HostPanel. Dibuat dengan semangat belajar.

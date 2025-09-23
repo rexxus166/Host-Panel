@@ -46,42 +46,72 @@
     </section>
 
     {{-- PRICING SECTION --}}
-    <section id="pricing" class="bg-white py-20">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-h2 font-exo2 text-dark">Paket Harga Kami</h2>
-                <p class="mt-4 text-gray-600">Transparan, tanpa biaya tersembunyi.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @forelse ($products as $product)
-                    <div class="border-2 border-dark rounded-playful-lg flex flex-col">
-                        <div class="p-8">
-                            <h3 class="text-h3 font-exo2 text-dark">{{ $product->name }}</h3>
-                            <p class="mt-4 text-h2 font-bold text-secondary">
-                                Rp {{ number_format($product->price) }}<span class="text-lg font-normal text-gray-500">/bulan</span>
-                            </p>
-                        </div>
-                        <div class="bg-gray-100 p-8 flex-grow">
-                            <ul class="space-y-4 text-gray-700">
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span><span class="font-bold">{{ $product->disk_space_gb }} GB</span> Penyimpanan SSD</span></li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span><span class="font-bold">{{ $product->bandwidth_gb }} GB</span> Bandwidth</span></li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span>Unlimited Database</span></li>
-                                <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span>Gratis SSL</span></li>
-                            </ul>
-                        </div>
-                        <div class="p-8">
-                            <a href="{{ route('order.create', $product) }}"
-                               class="block w-full text-center px-6 py-3 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200">
-                                Pesan Sekarang
-                            </a>
-                        </div>
-                    </div>
-                @empty
-                    <p class="md:col-span-3 text-center text-gray-500">Belum ada produk yang tersedia.</p>
-                @endforelse
-            </div>
+<section id="pricing" class="bg-white py-20">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-h2 font-exo2 text-dark">Paket Harga Kami</h2>
+            <p class="mt-4 text-gray-600">Transparan, tanpa biaya tersembunyi.</p>
         </div>
-    </section>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @forelse ($products as $product)
+                <div class="border-2 border-dark rounded-playful-lg flex flex-col">
+                    <div class="p-8">
+                        <h3 class="text-h3 font-exo2 text-dark">{{ $product->name }}</h3>
+                        {{-- Tampilkan deskripsi produk --}}
+                        <p class="mt-2 text-gray-600 text-sm h-16">{{ $product->description }}</p>
+
+                        <p class="mt-4 text-h2 font-bold text-secondary">
+                            Rp {{ number_format($product->price) }}
+                            {{-- Tampilkan periode harga secara dinamis --}}
+                            <span class="text-lg font-normal text-gray-500">
+                                @if($product->type == 'harian')
+                                    /hari
+                                @elseif($product->type == 'bulanan')
+                                    /bulan
+                                @else
+                                    /tahun
+                                @endif
+                            </span>
+                        </p>
+                    </div>
+                    <div class="bg-gray-100 p-8 flex-grow">
+                        <ul class="space-y-4 text-gray-700">
+                            {{-- Tampilkan Disk Space (tanpa menambahkan "GB" manual) --}}
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span><span class="font-bold">{{ $product->disk_space_gb }}</span> Penyimpanan SSD</span></li>
+                            
+                            {{-- Tampilkan Bandwidth (tanpa menambahkan "GB" manual) --}}
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span><span class="font-bold">{{ $product->bandwidth_gb }}</span> Bandwidth</span></li>
+                            
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span>Unlimited Database</span></li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span>Gratis SSL</span></li>
+                            
+                            {{-- Logika untuk menampilkan fitur domain gratis --}}
+                            @if ($product->has_free_domain)
+                                <li class="flex items-center">
+                                    <i class="fas fa-check-circle text-primary mr-3"></i>
+                                    <span>Gratis Domain <span class="font-bold">{{ $product->free_domain_tld }}</span></span>
+                                </li>
+                            @else
+                                <li class="flex items-center text-gray-400">
+                                    <i class="fas fa-times-circle mr-3"></i>
+                                    <span>Tanpa Gratis Domain</span>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                    <div class="p-8">
+                        <a href="{{ route('order.create', $product) }}"
+                           class="block w-full text-center px-6 py-3 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200">
+                            Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+            @empty
+                <p class="md:col-span-3 text-center text-gray-500">Belum ada produk yang tersedia.</p>
+            @endforelse
+        </div>
+    </div>
+</section>
 
 @endsection

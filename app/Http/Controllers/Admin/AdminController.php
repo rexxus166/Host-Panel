@@ -23,7 +23,8 @@ class AdminController extends Controller
     {
         $totalUsers = User::count();
         $totalProducts = Product::count();
-        return view('page.admin.dashboard.index', compact('totalUsers', 'totalProducts'));
+        $totalServices = Service::count();
+        return view('page.admin.dashboard.index', compact('totalUsers', 'totalProducts', 'totalServices'));
     }
 
     /**
@@ -50,10 +51,14 @@ class AdminController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'package_name_whm' => 'required|string|max:255', // <-- Tambahkan ini
+            'description' => 'required|string',
+            'package_name_whm' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
-            'disk_space_gb' => 'required|integer|min:1',
-            'bandwidth_gb' => 'required|integer|min:1',
+            'disk_space_gb' => 'required|string|max:255', // Diubah ke string
+            'bandwidth_gb' => 'required|string|max:255',  // Diubah ke string
+            'type' => 'required|in:harian,bulanan,tahunan', // Validasi tipe
+            'has_free_domain' => 'required|boolean', // Validasi boolean
+            'free_domain_tld' => 'nullable|string|max:100|required_if:has_free_domain,true', // Wajib jika free domain = true
         ]);
 
         Product::create($validatedData);
@@ -77,10 +82,14 @@ class AdminController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'required|string',
             'package_name_whm' => 'required|string|max:255',
             'price' => 'required|integer|min:0',
-            'disk_space_gb' => 'required|integer|min:1',
-            'bandwidth_gb' => 'required|integer|min:1',
+            'disk_space_gb' => 'required|string|max:255', // Diubah ke string
+            'bandwidth_gb' => 'required|string|max:255',  // Diubah ke string
+            'type' => 'required|in:harian,bulanan,tahunan', // Validasi tipe
+            'has_free_domain' => 'required|boolean', // Validasi boolean
+            'free_domain_tld' => 'nullable|string|max:100|required_if:has_free_domain,true', // Wajib jika free domain = true
         ]);
 
         $product->update($validatedData);
