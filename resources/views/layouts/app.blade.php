@@ -31,7 +31,7 @@
     {{-- Sidebar Khusus User --}}
     <aside id="sidebar" class="bg-dark text-white w-64 min-h-screen flex-shrink-0 p-4 flex flex-col fixed md:static transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
         <div class="flex items-center justify-center pb-4 border-b border-gray-700 mb-6">
-            <img src="{{ asset('assets/icon/logo.svg') }}" class="w-10 h-10 mr-2 filter invert" alt="HostPanel Logo">
+            <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10 mr-2 filter invert" alt="HostPanel Logo">
             <span class="text-xl font-bold font-exo2">HostPanel</span>
         </div>
 
@@ -43,10 +43,17 @@
                 <i class="fas fa-home w-6 text-center"></i>
                 <span class="ml-4 font-semibold font-lexend">Dashboard</span>
             </a>
+
+            <a href="{{ route('produk.index') }}"
+               class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary 
+                      {{ request()->routeIs('produk.index', 'produk.index.*') ? 'bg-secondary' : '' }}">
+                <i class="fas fa-shopping-cart w-6 text-center"></i>
+                <span class="ml-4 font-semibold font-lexend">Produk</span>
+            </a>
             
             <a href="{{ route('user.service') }}"
                class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary 
-                      {{ request()->routeIs('user.service') ? 'bg-secondary' : '' }}">
+                      {{ request()->routeIs('user.service', 'user.service.*') ? 'bg-secondary' : '' }}">
                 <i class="fas fa-server w-6 text-center"></i>
                 <span class="ml-4 font-semibold font-lexend">Layanan Saya</span>
             </a>
@@ -72,7 +79,7 @@
                      alt="User Avatar">
                 <div class="ml-3">
                     <p class="font-bold text-sm font-lexend">{{ Auth::user()->name }}</p>
-                    <p class="text-xs text-gray-400 font-lexend">{{ ucfirst(Auth::user()->role) }}</p>
+                    <!-- <p class="text-xs text-gray-400 font-lexend">{{ ucfirst(Auth::user()->role) }}</p> -->
                 </div>
             </div>
             <form method="POST" action="{{ route('logout') }}">

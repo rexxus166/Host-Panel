@@ -24,7 +24,7 @@
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('assets/icon/logo.svg') }}" class="w-10 h-10" alt="HostPanel Logo">
+                <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10" alt="HostPanel Logo">
                 <span class="ml-3 text-2xl font-exo2 font-bold text-dark">HostPanel</span>
             </a>
 
@@ -85,7 +85,7 @@
                 {{-- Kolom 1: Branding --}}
                 <div class="md:col-span-2">
                     <a href="{{ route('home') }}" class="flex items-center">
-                        <img src="{{ asset('assets/icon/logo.svg') }}" class="w-10 h-10 filter invert" alt="HostPanel Logo">
+                        <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10 filter invert" alt="HostPanel Logo">
                         <span class="ml-3 text-2xl font-exo2 font-bold">HostPanel</span>
                     </a>
                     <p class="mt-4 text-gray-400 max-w-md">

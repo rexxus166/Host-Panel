@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Service;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
@@ -46,5 +47,15 @@ class User extends Authenticatable
             'password' => 'hashed',
             'role' => 'string',
         ];
+    }
+
+    /**
+     * Mendefinisikan bahwa satu User bisa memiliki banyak Service.
+     */
+    public function services()
+    {
+        // 'user_id' adalah foreign key di tabel services
+        // 'id' adalah primary key di tabel users
+        return $this->hasMany(Service::class, 'user_id', 'id');
     }
 }

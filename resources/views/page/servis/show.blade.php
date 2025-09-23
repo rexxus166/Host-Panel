@@ -21,10 +21,10 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
             {{-- Kolom Kiri: Detail & Aksi --}}
-            <div class="lg:col-span-2 space-y-8">
+            <div class="lg:col-span-2">
                 
                 {{-- Kartu Aksi Utama (Login ke cPanel) --}}
-                <div class="bg-white p-6 rounded-playful-md shadow-border-offset border-2 border-dark">
+                <div class="bg-white p-6 rounded-playful-md shadow-border-offset border-2 border-dark mb-8">
                     <h3 class="text-h4 font-exo2 text-dark mb-4">Akses Panel Kontrol</h3>
                     
                     @if ($service->status == 'active')
@@ -83,11 +83,11 @@
                     <div class="flex justify-between items-center">
                         <span class="font-semibold">Status:</span>
                         <span class="px-2 py-1 font-semibold leading-tight text-xs rounded-full
-                            @if($service->status == 'active') bg-green-100 text-green-700 @endif
-                            @if($service->status == 'pending') bg-yellow-100 text-yellow-700 @endif
-                            @if($service->status == 'suspended') bg-red-100 text-red-700 @endif
-                        ">
-                            {{ ucfirst($service->status) }}
+                                @if($service->status == 'active') bg-green-100 text-green-700 @endif
+                                @if($service->status == 'pending') bg-yellow-100 text-yellow-700 @endif
+                                @if($service->status == 'suspended') bg-red-100 text-red-700 @endif
+                            ">
+                                {{ ucfirst($service->status) }}
                         </span>
                     </div>
                 </div>

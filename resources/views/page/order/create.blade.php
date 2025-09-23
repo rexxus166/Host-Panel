@@ -31,7 +31,7 @@
                 <div class="mt-8 flex justify-end">
                     <button type="submit" 
                             class="px-8 py-3 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200">
-                        <i class="fas fa-check-circle mr-2"></i> Selesaikan Pesanan
+                        <i class="fas fa-check-circle mr-2"></i> Buat Pesanan
                     </button>
                 </div>
             </form>

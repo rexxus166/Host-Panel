@@ -35,7 +35,7 @@
             <div class="w-full lg:w-1/2 p-8 sm:p-12 flex flex-col justify-center items-center text-center 
                         bg-dark lg:gradient-bg text-white lg:text-white">
                 <a href="/" class="flex flex-col items-center mb-6">
-                    <img src="{{ asset('assets/icon/logo.svg') }}" class="w-20 h-20 filter invert mb-4" alt="HostPanel Logo">
+                    <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-20 h-20 filter invert mb-4" alt="HostPanel Logo">
                     <h1 class="text-h1 font-exo2">HostPanel</h1>
                 </a>
                 <p class="text-lg text-gray-300 max-w-xs leading-relaxed hidden sm:block">

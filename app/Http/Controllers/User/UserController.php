@@ -7,12 +7,20 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('page.dashboard.index');
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Ambil layanan milik user tersebut, beserta relasi produknya
+        // Eager loading `product` untuk menghindari N+1 query problem
+        $services = $user->services()->with('product')->get();
+        
+        return view('page.dashboard.index', compact('services'));
     }
 
     public function produk()
