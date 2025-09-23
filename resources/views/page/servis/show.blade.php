@@ -29,7 +29,7 @@
                     
                     @if ($service->status == 'active')
                         <p class="text-gray-600 mb-4">Masuk ke cPanel untuk mengelola file, database, email, dan lainnya.</p>
-                        <a href="#" class="px-6 py-3 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200">
+                        <a href="{{ route('user.service.sso', $service) }}" target="_blank" class="px-6 py-3 bg-primary text-dark font-bold rounded-playful-sm border-2 border-dark shadow-border-offset hover:bg-opacity-80 transition-all duration-200 inline-block">
                             <i class="fas fa-sign-in-alt mr-2"></i> Login ke cPanel (SSO)
                         </a>
                     @else

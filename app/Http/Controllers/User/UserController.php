@@ -44,4 +44,43 @@ class UserController extends Controller
     // Jika aman, tampilkan view dengan data layanan
     return view('page.servis.show', compact('service'));
     }
+
+    public function ssoLogin(Service $service)
+    {
+        // Keamanan: Pastikan user hanya bisa mengakses layanannya sendiri
+        if (auth()->id() !== $service->user_id) {
+            abort(403);
+        }
+
+        // Ambil kredensial dari file config
+        $host = config('services.whm.host');
+        $user = config('services.whm.user');
+        $token = config('services.whm.token');
+
+        // Regenerasi username cPanel dengan logika yang SAMA seperti saat pembuatan
+        $cpanelUsername = strtolower(substr(preg_replace('/[^a-zA-Z0-9]/', '', $service->domain), 0, 8));
+
+        // Panggil WHM API untuk membuat sesi login
+        $response = Http::withoutVerifying()
+                        ->timeout(60)
+                        ->withHeaders(['Authorization' => 'whm ' . $user . ':' . $token])
+                        ->get("https://{$host}:2087/json-api/create_user_session", [
+                            'api.version' => 1,
+                            'user'        => $cpanelUsername, // Username cPanel dari user
+                            'service'     => 'cpaneld',    // Layanan yang ingin diakses (cPanel)
+                            'app'         => 'cpanel',
+                        ]);
+
+        // Periksa respon
+        if ($response->successful() && isset($response->json()['data']['url'])) {
+            $loginUrl = $response->json()['data']['url'];
+
+            // Redirect pengguna ke URL login sekali pakai dari WHM
+            return redirect()->away($loginUrl);
+        } else {
+            // Jika gagal, kembali ke halaman sebelumnya dengan pesan error
+            $reason = $response->json()['metadata']['reason'] ?? 'Gagal menghubungi server hosting.';
+            return redirect()->back()->with('error', 'Gagal membuat sesi login cPanel: ' . $reason);
+        }
+    }
 }

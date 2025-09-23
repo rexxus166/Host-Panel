@@ -55,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     // Layanan Users
     Route::get('/services', [UserController::class, 'service'])->name('user.service');
     Route::get('/service/{service}', [UserController::class, 'show'])->name('user.service.show');
+    Route::get('/user/services/{service}/sso', [UserController::class, 'ssoLogin'])->name('user.service.sso');
 
     // Produk Users
     Route::get('/produk', [UserController::class, 'produk'])->name('produk.index');
