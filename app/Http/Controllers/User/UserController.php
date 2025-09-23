@@ -98,4 +98,16 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Gagal membuat sesi login cPanel: ' . $reason);
         }
     }
+
+    // Route untuk Tagihan
+    public function tagihan()
+    {
+        return view('page.tagihan.index');
+    }
+
+    // Route untuk Bantuan
+    public function bantuan()
+    {
+        return view('page.bantuan.index');
+    }
 }

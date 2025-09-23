@@ -53,16 +53,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->middleware('role:user')->name('user.dashboard');
 
     // Layanan Users
-    Route::get('/services', [UserController::class, 'service'])->name('user.service');
-    Route::get('/service/{service}', [UserController::class, 'show'])->name('user.service.show');
-    Route::get('/user/services/{service}/sso', [UserController::class, 'ssoLogin'])->name('user.service.sso');
+    Route::get('/services', [UserController::class, 'service'])->middleware('role:user')->name('user.service');
+    Route::get('/service/{service}', [UserController::class, 'show'])->middleware('role:user')->name('user.service.show');
+    Route::get('/user/services/{service}/sso', [UserController::class, 'ssoLogin'])->middleware('role:user')->name('user.service.sso');
 
     // Produk Users
-    Route::get('/produk', [UserController::class, 'produk'])->name('produk.index');
+    Route::get('/produk', [UserController::class, 'produk'])->middleware('role:user')->name('produk.index');
     
     // Rute untuk proses pemesanan
-    Route::get('/order/create/{product}', [OrderController::class, 'create'])->name('order.create');
-    Route::post('/order/store/{product}', [OrderController::class, 'store'])->name('order.store');
+    Route::get('/order/create/{product}', [OrderController::class, 'create'])->middleware('role:user')->name('order.create');
+    Route::post('/order/store/{product}', [OrderController::class, 'store'])->middleware('role:user')->name('order.store');
+
+    // Route untuk Tagihan
+    Route::get('/tagihan', [UserController::class, 'tagihan'])->middleware('role:user')->name('tagihan');
+
+    // Route Untuk Bantuan
+    Route::get('/bantuan', [UserController::class, 'bantuan'])->middleware('role:user')->name('bantuan');
 });
 
 require __DIR__.'/auth.php';

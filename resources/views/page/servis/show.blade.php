@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Kelola Layanan')
+@section('page_title', 'Kelola Layanan')
 
 @section('content')
     <div>

@@ -58,14 +58,16 @@
                 <span class="ml-4 font-semibold font-lexend">Layanan Saya</span>
             </a>
 
-            <a href="#" {{-- Nanti kita buat route('user.invoices') --}}
-               class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary">
+            <a href="{{ route('tagihan') }}" {{-- Nanti kita buat route('user.invoices') --}}
+               class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary
+                      {{ request()->routeIs('tagihan', 'tagihan.*') ? 'bg-secondary' : '' }}">
                 <i class="fas fa-file-invoice-dollar w-6 text-center"></i>
                 <span class="ml-4 font-semibold font-lexend">Tagihan</span>
             </a>
 
-            <a href="#" {{-- Nanti kita buat route('user.tickets') --}}
-               class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary">
+            <a href="{{ route('bantuan') }}" {{-- Nanti kita buat route('user.tickets') --}}
+               class="flex items-center mt-3 px-4 py-3 rounded-playful-sm transition-colors duration-200 hover:bg-secondary
+                      {{ request()->routeIs('bantuan', 'bantuan.*') ? 'bg-secondary' : '' }}">
                 <i class="fas fa-life-ring w-6 text-center"></i>
                 <span class="ml-4 font-semibold font-lexend">Bantuan</span>
             </a>
@@ -98,7 +100,7 @@
             <button id="menu-toggle" class="text-dark focus:outline-none">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
-            <h1 class="text-xl font-bold text-dark font-exo2">Member Area</h1>
+            <h1 class="text-xl font-bold text-dark font-exo2">@yield('page_title', 'Dashboard')</h1>
             <div class="w-8"></div>
         </header>
 

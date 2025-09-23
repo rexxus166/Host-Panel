@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Pesan Layanan Hosting')
+@section('title', 'Produk')
+@section('page_title', 'Produk')
 
 @section('content')
     <div>
@@ -13,7 +14,7 @@
         {{-- Konten Utama - Daftar Produk Dinamis --}}
         <div class="space-y-12">
             <div>
-                <h2 class="text-h3 font-exo2 text-dark mb-6 text-center lg:text-left">Shared Hosting</h2>
+                <h2 class="text-h3 font-exo2 text-dark mb-6 text-center lg:text-left"></h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                     {{-- PERULANGAN DIMULAI DI SINI --}}
