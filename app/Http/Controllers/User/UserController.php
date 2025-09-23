@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Service;
@@ -49,7 +50,7 @@ class UserController extends Controller
     {
         // Keamanan: Pastikan user hanya bisa mengakses layanannya sendiri
         if (auth()->id() !== $service->user_id) {
-            abort(403);
+            abort(403, 'Akses Ditolak');
         }
 
         // Ambil kredensial dari file config
@@ -71,12 +72,18 @@ class UserController extends Controller
                             'app'         => 'cpanel',
                         ]);
 
-        // Periksa respon
+        // Periksa respon dari API
         if ($response->successful() && isset($response->json()['data']['url'])) {
-            $loginUrl = $response->json()['data']['url'];
+            $originalUrl = $response->json()['data']['url'];
+            
+            // ====================================================================
+            // === BAGIAN YANG DIPERBARUI: GANTI HOSTNAME DENGAN NAMA ALIAS ANDA ===
+            // ====================================================================
+            $brandedUrl = str_replace($host, 'cpanel.hosting.miomi.dev', $originalUrl);
+            
+            // Redirect pengguna ke URL baru yang sudah di-branding
+            return redirect()->away($brandedUrl);
 
-            // Redirect pengguna ke URL login sekali pakai dari WHM
-            return redirect()->away($loginUrl);
         } else {
             // Jika gagal, kembali ke halaman sebelumnya dengan pesan error
             $reason = $response->json()['metadata']['reason'] ?? 'Gagal menghubungi server hosting.';
