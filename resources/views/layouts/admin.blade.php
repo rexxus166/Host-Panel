@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>HostPanel - @yield('title')</title>
+    <title>MiomiHost - @yield('title')</title>
 
     {{-- Fonts from Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,8 +54,8 @@
     <aside id="sidebar" class="bg-dark text-white w-64 min-h-screen flex-shrink-0 p-4 flex flex-col fixed md:static transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
         <div class="flex items-center justify-center pb-4 border-b border-gray-700 mb-6">
             {{-- Ganti logo ini dengan logo Anda --}}
-            <img src="{{ asset('assets/icon/logo.svg') }}" class="w-10 h-10 mr-2 filter invert" alt="HostPanel Logo">
-            <span class="text-xl font-bold font-exo2">HostPanel Admin</span>
+            <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10 mr-2 filter invert" alt="MiomiHost Logo">
+            <span class="text-xl font-bold font-exo2">MiomiHost</span>
         </div>
 
         <nav class="flex-grow">

@@ -17,7 +17,7 @@
     </section>
 
     {{-- WHOIS FORM --}}
-    <section class="bg-gray-100 py-16">
+    <section class="bg-gray-100 py-20">
         <div class="container mx-auto px-6 max-w-3xl">
             <div class="bg-white border-2 border-dark rounded-playful-lg shadow-border-offset p-6 md:p-8">
                 <h2 class="text-h3 font-exo2 text-dark text-center mb-6">Masukkan Nama Domain</h2>
@@ -55,7 +55,7 @@
     {{-- WHOIS RESULT --}}
     {{-- Diperbarui untuk menampilkan tabel yang rapi --}}
     @if (!empty($whoisResult))
-        <section id="hasil" class="bg-white py-16 scroll-mt-20">
+        <section id="hasil" class="bg-white py-20 scroll-mt-20">
             <div class="container mx-auto px-6 max-w-5xl">
                 <h2 class="text-h2 font-exo2 text-dark mb-8 text-center">
                     Hasil WHOIS untuk <span class="text-primary">{{ $domain }}</span>

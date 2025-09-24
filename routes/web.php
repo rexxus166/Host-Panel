@@ -13,12 +13,11 @@ use App\Models\Service;
 
 // Halaman depan yang bisa diakses semua orang
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// Halaman WHOIS
+Route::get('/kontak', [HomeController::class, 'kontak'])->name('kontak');
 Route::get('/whois', [HomeController::class, 'whois'])->name('whois');
-
-// Route untuk memproses pencarian dan menampilkan hasil
 Route::get('/whois/lookup', [HomeController::class, 'lookup'])->name('lookup');
+Route::get('/terms-of-service', [HomeController::class, 'termsOfService'])->name('terms-of-service');
+Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
 
 // Grup untuk semua rute yang hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {

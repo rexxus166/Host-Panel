@@ -22,7 +22,7 @@
     <section id="features" class="bg-gray-100 py-20">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12">
-                <h2 class="text-h2 font-exo2 text-dark">Kenapa Memilih HostPanel?</h2>
+                <h2 class="text-h2 font-exo2 text-dark">Kenapa Memilih MiomiHost?</h2>
                 <p class="mt-4 text-gray-600">Fitur-fitur unggulan yang kami tawarkan.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">

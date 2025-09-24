@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HostPanel - @yield('title', 'Solusi Hosting Modern')</title>
+    <title>MiomiHost - @yield('title', 'Solusi Hosting Modern')</title>
 
     {{-- Fonts, Icons, dan Vite --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,15 +24,15 @@
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             {{-- Logo --}}
             <a href="{{ route('home') }}" class="flex items-center">
-                <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10" alt="HostPanel Logo">
-                <span class="ml-3 text-2xl font-exo2 font-bold text-dark">HostPanel</span>
+                <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10" alt="MiomiHost Logo">
+                <span class="ml-3 text-2xl font-exo2 font-bold text-dark">MiomiHost</span>
             </a>
 
             {{-- Menu Desktop --}}
             <div class="hidden md:flex items-center space-x-8">
                 <a href="{{ route('home') }}#features" class="text-dark font-semibold hover:text-secondary">Fitur</a>
                 <a href="{{ route('home') }}#pricing" class="text-dark font-semibold hover:text-secondary">Harga</a>
-                <a href="#" class="text-dark font-semibold hover:text-secondary">Kontak</a>
+                <a href="{{ route('kontak') }}" class="text-dark font-semibold hover:text-secondary">Kontak</a>
                 <a href="{{ route('whois') }}" class="text-dark font-semibold hover:text-secondary">WHOIS</a>
             </div>
 
@@ -70,7 +70,7 @@
         <div id="mobile-menu" class="hidden md:hidden">
             <a href="{{ route('home') }}#features" class="block py-2 px-6 text-sm hover:bg-gray-100">Fitur</a>
             <a href="{{ route('home') }}#pricing" class="block py-2 px-6 text-sm hover:bg-gray-100">Harga</a>
-            <a href="#" class="block py-2 px-6 text-sm hover:bg-gray-100">Kontak</a>
+            <a href="{{ route('kontak') }}" class="block py-2 px-6 text-sm hover:bg-gray-100">Kontak</a>
             <a href="{{ route('whois') }}" class="block py-2 px-6 text-sm hover:bg-gray-100">WHOIS</a>
             <div class="px-6 py-4 border-t border-gray-200">
                 @guest
@@ -109,8 +109,8 @@
                 {{-- Kolom 1: Branding --}}
                 <div class="md:col-span-2">
                     <a href="{{ route('home') }}" class="flex items-center">
-                        <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10 filter invert" alt="HostPanel Logo">
-                        <span class="ml-3 text-2xl font-exo2 font-bold">HostPanel</span>
+                        <img src="{{ asset('assets/image/logo-miomidev.svg') }}" class="w-10 h-10 filter invert" alt="MiomiHost Logo">
+                        <span class="ml-3 text-2xl font-exo2 font-bold">MiomiHost</span>
                     </a>
                     <p class="mt-4 text-gray-400 max-w-md">
                         Platform terbaik untuk mengelola semua layanan hosting Anda. Akses mudah, fitur lengkap, dan performa andal.
@@ -121,8 +121,8 @@
                 <div>
                     <h4 class="text-lg font-bold font-exo2 mb-4">Legal</h4>
                     <div class="flex flex-col space-y-3">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="{{ route('terms-of-service') }}" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                        <a href="{{ route('privacy-policy') }}" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
                     </div>
                     {{-- Sosial Media --}}
                     <div class="flex space-x-4 mt-6">

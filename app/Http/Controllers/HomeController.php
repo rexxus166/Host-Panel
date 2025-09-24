@@ -16,6 +16,30 @@ class HomeController extends Controller
     }
 
     /**
+     * Menampilkan halaman Kontak.
+     */
+    public function kontak()
+    {
+        return view('page.kontak.index');
+    }
+
+    /**
+     * Menampilkan halaman Terms of Service.
+     */
+    public function termsOfService()
+    {
+        return view('page.ketentuan.index');
+    }
+
+    /**
+     * Menampilkan halaman Privacy Policy.
+     */
+    public function privacyPolicy()
+    {
+        return view('page.kebijakan.index');
+    }
+
+    /**
      * Menampilkan halaman WHOIS.
      */
     public function whois()
