@@ -30,9 +30,10 @@
 
             {{-- Menu Desktop --}}
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#features" class="text-dark font-semibold hover:text-secondary">Fitur</a>
-                <a href="#pricing" class="text-dark font-semibold hover:text-secondary">Harga</a>
+                <a href="{{ route('home') }}#features" class="text-dark font-semibold hover:text-secondary">Fitur</a>
+                <a href="{{ route('home') }}#pricing" class="text-dark font-semibold hover:text-secondary">Harga</a>
                 <a href="#" class="text-dark font-semibold hover:text-secondary">Kontak</a>
+                <a href="{{ route('whois') }}" class="text-dark font-semibold hover:text-secondary">WHOIS</a>
             </div>
 
             {{-- Tombol CTA & Dashboard/Login --}}
@@ -67,9 +68,10 @@
         </nav>
         
         <div id="mobile-menu" class="hidden md:hidden">
-            <a href="#features" class="block py-2 px-6 text-sm hover:bg-gray-100">Fitur</a>
-            <a href="#pricing" class="block py-2 px-6 text-sm hover:bg-gray-100">Harga</a>
+            <a href="{{ route('home') }}#features" class="block py-2 px-6 text-sm hover:bg-gray-100">Fitur</a>
+            <a href="{{ route('home') }}#pricing" class="block py-2 px-6 text-sm hover:bg-gray-100">Harga</a>
             <a href="#" class="block py-2 px-6 text-sm hover:bg-gray-100">Kontak</a>
+            <a href="{{ route('whois') }}" class="block py-2 px-6 text-sm hover:bg-gray-100">WHOIS</a>
             <div class="px-6 py-4 border-t border-gray-200">
                 @guest
                     <a href="{{ route('login') }}" class="block text-center w-full mb-2 px-5 py-2 text-dark font-bold rounded-playful-sm bg-gray-200">Login</a>
@@ -134,7 +136,7 @@
             {{-- Copyright --}}
             <div class="mt-12 border-t border-gray-700 pt-6 text-center">
                 <p class="text-gray-500 text-sm">
-                    &copy; {{ date('Y') }} HostPanel. Dibuat dengan semangat belajar.
+                    &copy; {{ date('Y') }} Dibuat dengan <i class="fas fa-heart text-red-500"></i> MiomiHost.
                 </p>
             </div>
         </div>

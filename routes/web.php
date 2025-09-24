@@ -14,6 +14,12 @@ use App\Models\Service;
 // Halaman depan yang bisa diakses semua orang
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Halaman WHOIS
+Route::get('/whois', [HomeController::class, 'whois'])->name('whois');
+
+// Route untuk memproses pencarian dan menampilkan hasil
+Route::get('/whois/lookup', [HomeController::class, 'lookup'])->name('lookup');
+
 // Grup untuk semua rute yang hanya bisa diakses setelah login
 Route::middleware(['auth'])->group(function () {
     

@@ -83,14 +83,14 @@
                             {{-- Tampilkan Bandwidth (tanpa menambahkan "GB" manual) --}}
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span><span class="font-bold">{{ $product->bandwidth_gb }}</span> Bandwidth</span></li>
                             
-                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span>Unlimited Database</span></li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span><span class="font-bold">Unlimited</span> Database</span></li>
                             <li class="flex items-center"><i class="fas fa-check-circle text-primary mr-3"></i> <span>Gratis SSL</span></li>
                             
                             {{-- Logika untuk menampilkan fitur domain gratis --}}
                             @if ($product->has_free_domain)
                                 <li class="flex items-center">
                                     <i class="fas fa-check-circle text-primary mr-3"></i>
-                                    <span>Gratis Domain <span class="font-bold">{{ $product->free_domain_tld }}</span></span>
+                                    <span>Gratis Domain <span class="font-bold">{{ $product->free_domain_tld }}</span> Min Pembelian 1 Thn</span>
                                 </li>
                             @else
                                 <li class="flex items-center text-gray-400">
